@@ -21,7 +21,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     paddingTop: "20px",
-    borderRight: "2px solid #333",   // <-- Add this line
+    borderRight: "2px solid #333",   
   },
   link: {
     padding: "12px 16px",
