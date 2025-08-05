@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import Navbar from './components/navbar.jsx'
 import './App.css'
 
 function App() {
@@ -8,7 +9,10 @@ function App() {
 
   return (
     <>
-      <div className='start card m-5 text-center bg-dark text-white'>Under Construction</div>
+    <div className=''> 
+      <Navbar/>
+      <div ></div>
+    </div>
     </>
   )
 }
