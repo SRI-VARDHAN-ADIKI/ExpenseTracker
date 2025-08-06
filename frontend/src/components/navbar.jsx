@@ -5,7 +5,9 @@
         <a href="#news" style={styles.link}>News</a>
         <a href="#contact" style={styles.link}>Contact</a>
         <a href="#about" style={styles.link}>About</a>
-
+        <br/>
+        <br/>
+        <br/>
         <a href="logout" style={styles.link}>Logout</a>
 
         </div>
