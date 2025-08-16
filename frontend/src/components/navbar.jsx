@@ -18,7 +18,7 @@
 const styles = {
   navbar: {
     height: "100vh",
-    width: "200px",
+    width: "250px",
     backgroundColor: "#f1f1f1",
     display: "flex",
     flexDirection: "column",
