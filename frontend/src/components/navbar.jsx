@@ -23,7 +23,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     paddingTop: "20px",
-    borderRight: "2px solid #333",   
+    borderRight: "2px solid #3333",   
   },
   link: {
     padding: "12px 16px",
