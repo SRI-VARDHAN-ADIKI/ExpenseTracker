@@ -8,7 +8,7 @@
         <br/>
         <br/>
         <br/>
-        <a href="logout" style={styles.link}>Logout</a>
+        <a href="logout" style={styles.link}>Logout..</a>
 
         </div>
     );
