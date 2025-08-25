@@ -1,20 +1,27 @@
+    import './navbar.css';
+            
     export default function Navbar() {
     return (
-        <div style={styles.navbar}>
-        <a href="#home" style={styles.link}>Home</a>
-        <a href="#news" style={styles.link}>News</a>
-        <a href="#contact" style={styles.link}>Contact</a>
-        <a href="#about" style={styles.link}>About</a>
+        <div className="navbar">
+        <a href="#home" className="link">Home</a>
+        <a href="#news" className="link">News</a>
+        <a href="#contact" className="link">Contact</a>
+        <a href="#about" className="link">About</a>
         <br/>
         <br/>
         <br/>
+<<<<<<< HEAD
         <a href="logout" style={styles.link}>Logout..</a>
+=======
+        <a href="logout" className="link">Logout</a>
+>>>>>>> a19c836 (added navbar.css file)
 
         </div>
     );
 
 };
 
+<<<<<<< HEAD
 const styles = {
   navbar: {
     height: "100vh",
@@ -32,3 +39,6 @@ const styles = {
     display: "block",
   }
 };
+=======
+
+>>>>>>> a19c836 (added navbar.css file)
