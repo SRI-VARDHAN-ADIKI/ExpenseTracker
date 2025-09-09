@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import Navbar from './components/navbar.jsx'
+import ProfilePage from './components/profilepage.jsx';
+import { Routes, Route } from 'react-router-dom';
 import './App.css'
 
 function App() {
@@ -9,9 +10,11 @@ function App() {
 
   return (
     <>
-    <div className=''> 
-      <Navbar/>
-    </div>
+      <Navbar />
+      <Routes>
+        <Route path="/profile" element={<ProfilePage />} />
+        {/* Add more routes here as needed */}
+      </Routes>
     </>
   )
 }
