@@ -13,12 +13,23 @@ export default function ProfilePage() {
                             <p>User Name : Sri Vardhan Adiki</p>
                             <p>Email: srivardhanadiki@gmail.com</p>
                         </div>
+                        <div style = {{position: "absolute" , bottom : "20px"}}>
+                            <button className="btn btn-danger">Log Out</button>
+                        </div>
                     </div>
 
                     <div className = "card" style = {{marginLeft: "20px" , padding: "20px" , flex : 1}}>
                         <h1>Edit Profile here!!</h1>
                         <label htmlFor="name">Name:</label>
                         <input type="text" id="name" placeholder="Enter your name" />
+                        <br />
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" id="password" placeholder="Enter your password" />
+                        <br />
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" id="email" placeholder="Enter your email" />
+                        <br />
+                        <button className="save-button">Save Changes</button>
                     </div>
                 </div>
                 <div className="bg-dark text-white p-3" >
