@@ -1,40 +1,33 @@
-// Import required packages
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const cors = require('cors'); // Import cors
+const cors = require('cors');
 
-// Import route files
 const authRoutes = require('./routes/authRoutes');
+const transactionRoutes = require('./routes/transactionRoutes'); // Import transaction routes
 
-// Load environment variables from .env file
 dotenv.config();
 
-// --- Database Connection ---
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error)
-  {
+  } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
     process.exit(1);
   }
 };
 connectDB();
 
-// --- Express App Initialization ---
 const app = express();
 
-// --- Middleware ---
-app.use(cors()); // Enable Cross-Origin Resource Sharing
-app.use(express.json()); // Allow the server to accept JSON in the request body
+app.use(cors());
+app.use(express.json());
 
-// --- API Routes ---
-// Any request to /api/auth will be handled by authRoutes
 app.use('/api/auth', authRoutes);
+app.use('/api/transactions', transactionRoutes); 
 
-// A simple test route to ensure the server is working
+// A simple test route
 app.get('/', (req, res) => {
   res.send('Expense Tracker API is running...');
 });
