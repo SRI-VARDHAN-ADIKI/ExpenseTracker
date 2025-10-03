@@ -4,13 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div className='start card m-5 text-center bg-dark text-white'>Under Construction</div>
-    </>
+    <div>
+      <h1>Expense Tracker Frontend</h1>
+    </div>
   )
 }
 
 export default App
+
