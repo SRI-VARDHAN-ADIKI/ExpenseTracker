@@ -41,13 +41,13 @@ const ProfilePage = () => {
         <>
             <h1 className="h2 pb-2 mb-4 border-bottom">My Profile</h1>
             <div className="row justify-content-center">
-                <div className="col-lg-10"> {/* Widened the main container for a better look */}
+                <div className="col-lg-10"> 
                     <div className="card shadow-sm">
                         <div className="card-body p-4">
                             <form onSubmit={onSubmit}>
-                                {/* --- THIS IS THE FIX --- */}
+
                                 <div className="row align-items-center">
-                                    {/* Column 1: Profile Photo */}
+
                                     <div className="col-md-4 text-center mb-4 mb-md-0">
                                         <img 
                                             src={profilePhotoUrl || `https://placehold.co/150x150/0d6efd/white?text=${name.charAt(0)}`} 
@@ -57,7 +57,7 @@ const ProfilePage = () => {
                                         />
                                     </div>
 
-                                    {/* Column 2: Form Fields */}
+
                                     <div className="col-md-8">
                                         <div className="mb-3"><label htmlFor="name" className="form-label">Name</label><input type="text" className="form-control" name="name" value={name} onChange={onChange} required /></div>
                                         <div className="mb-3"><label htmlFor="email" className="form-label">Email Address</label><input type="email" className="form-control" name="email" value={email} onChange={onChange} required /></div>

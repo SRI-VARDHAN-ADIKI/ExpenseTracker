@@ -49,8 +49,9 @@ const ViewAllTransactionsPage = () => {
                                     <small className="text-muted">{t.category} - {formatDate(t.createdAt)}</small>
                                 </div>
                                 <div className="d-flex align-items-center">
+
                                     <span className={`badge bg-${t.type === 'income' ? 'success' : 'danger'} rounded-pill fs-6 me-3`}>
-                                        {t.type === 'income' ? '+' : '-'}${t.amount.toFixed(2)}
+                                        {t.type === 'income' ? '+' : '-'}₹{t.amount.toFixed(2)}
                                     </span>
                                     <button onClick={() => handleDelete(t._id)} className="btn btn-sm btn-outline-danger"><i className="bi bi-trash"></i></button>
                                 </div>
