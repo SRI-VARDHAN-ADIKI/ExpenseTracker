@@ -1,99 +1,70 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const { protect } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authMiddleware.js');
 
-const Transaction = require('../models/Transaction');
+const Transaction = require('../models/Transaction.js');
 
-// --- Routes ---
-// Note: All routes here are prefixed with '/api/transactions' (from server.js)
-// and are protected by the 'protect' middleware.
-
-/**
- * @desc    Get all transactions for the logged-in user
- * @route   GET /api/transactions
- * @access  Private
- */
+// GET all transactions
 router.get('/', protect, asyncHandler(async (req, res) => {
-  // req.user is available because of the 'protect' middleware
-  const transactions = await Transaction.find({ user: req.user.id }).sort({ date: -1 });
-  res.status(200).json(transactions);
+    const transactions = await Transaction.find({ user: req.user.id }).sort({ createdAt: -1 });
+    res.json(transactions);
 }));
 
-/**
- * @desc    Add a new transaction
- * @route   POST /api/transactions
- * @access  Private
- */
+// POST a new transaction
 router.post('/', protect, asyncHandler(async (req, res) => {
-  const { description, amount, type, category, date } = req.body;
-
-  // Basic validation
-  if (!description || !amount || !type) {
-    res.status(400);
-    throw new Error('Please provide description, amount, and type');
-  }
-
-  const transaction = await Transaction.create({
-    user: req.user.id, // Link the transaction to the logged-in user
-    description,
-    amount,
-    type,
-    category,
-    date: date || Date.now(),
-  });
-
-  res.status(201).json(transaction);
+    const { description, amount, type, category } = req.body;
+    if (!description || !amount || !type || !category) {
+        res.status(400);
+        throw new Error('Please add all fields');
+    }
+    const transaction = new Transaction({ user: req.user.id, description, amount, type, category });
+    const createdTransaction = await transaction.save();
+    res.status(201).json(createdTransaction);
 }));
 
-/**
- * @desc    Update a transaction
- * @route   PUT /api/transactions/:id
- * @access  Private
- */
+// === NEW UPDATE ROUTE START ===
+// @desc    Update a transaction
+// @route   PUT /api/transactions/:id
+// @access  Private
 router.put('/:id', protect, asyncHandler(async (req, res) => {
-  const transaction = await Transaction.findById(req.params.id);
+    const transaction = await Transaction.findById(req.params.id);
 
-  if (!transaction) {
-    res.status(404);
-    throw new Error('Transaction not found');
-  }
+    if (!transaction) {
+        res.status(404);
+        throw new Error('Transaction not found');
+    }
 
-  // Check if the transaction belongs to the logged-in user
-  if (transaction.user.toString() !== req.user.id) {
-    res.status(401); // Unauthorized
-    throw new Error('User not authorized to update this transaction');
-  }
+    // Check for user
+    if (transaction.user.toString() !== req.user.id) {
+        res.status(401);
+        throw new Error('User not authorized');
+    }
 
-  const updatedTransaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, {
-    new: true, // Return the modified document rather than the original
-  });
+    const updatedTransaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, {
+        new: true, // This option returns the modified document
+    });
 
-  res.status(200).json(updatedTransaction);
+    res.json(updatedTransaction);
 }));
+// === NEW UPDATE ROUTE END ===
 
-/**
- * @desc    Delete a transaction
- * @route   DELETE /api/transactions/:id
- * @access  Private
- */
+// DELETE a transaction
 router.delete('/:id', protect, asyncHandler(async (req, res) => {
-  const transaction = await Transaction.findById(req.params.id);
+    const transaction = await Transaction.findById(req.params.id);
 
-  if (!transaction) {
-    res.status(404);
-    throw new Error('Transaction not found');
-  }
+    if (!transaction) {
+        res.status(404);
+        throw new Error('Transaction not found');
+    }
 
-  // Check if the transaction belongs to the logged-in user
-  if (transaction.user.toString() !== req.user.id) {
-    res.status(401); // Unauthorized
-    throw new Error('User not authorized to delete this transaction');
-  }
+    if (transaction.user.toString() !== req.user.id) {
+        res.status(401);
+        throw new Error('User not authorized');
+    }
 
-  await transaction.deleteOne();
-
-  res.status(200).json({ id: req.params.id, message: 'Transaction removed' });
+    await transaction.deleteOne();
+    res.status(200).json({ id: req.params.id });
 }));
 
 module.exports = router;
