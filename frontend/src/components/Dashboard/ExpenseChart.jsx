@@ -1,39 +1,92 @@
 import React from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-// We have to register the components we want to use from Chart.js
-ChartJS.register(ArcElement, Tooltip, Legend);
+// 1. Register all the necessary components for a Line Chart
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const ExpenseChart = ({ transactions }) => {
-    // First, we process the data to be in the format the chart needs
-    const expenseByCategory = transactions
-        // 1. We only want expenses
-        .filter(t => t.type === 'expense')
-        // 2. We group them by category and sum the amounts
-        .reduce((acc, transaction) => {
-            acc[transaction.category] = (acc[transaction.category] || 0) + transaction.amount;
-            return acc;
-        }, {});
+    // --- Data Processing Logic ---
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    // Get the total number of days in the current month
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    const chartData = {
-        labels: Object.keys(expenseByCategory), // e.g., ['Food', 'Transport', 'Bills']
-        datasets: [{
-            data: Object.values(expenseByCategory), // e.g., [500, 150, 300]
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
-        }]
+    // Create an array of labels for each day of the month (e.g., "1", "2", ... "31")
+    const labels = Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
+
+    // Create empty arrays to hold the total for each day, all starting at 0
+    const dailyIncome = new Array(daysInMonth).fill(0);
+    const dailyExpenses = new Array(daysInMonth).fill(0);
+
+    // Filter transactions to only include those from the current month
+    transactions
+        .filter(t => {
+            const tDate = new Date(t.createdAt);
+            return tDate.getMonth() === currentMonth && tDate.getFullYear() === currentYear;
+        })
+        // Loop through this month's transactions and add their amounts to the correct day
+        .forEach(t => {
+            const dayOfMonth = new Date(t.createdAt).getDate() - 1; // get day (1-31) -> (0-30)
+            if (t.type === 'income') {
+                dailyIncome[dayOfMonth] += t.amount;
+            } else {
+                dailyExpenses[dayOfMonth] += t.amount;
+            }
+        });
+
+    // --- Chart Configuration ---
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Income',
+                data: dailyIncome,
+                borderColor: 'rgb(75, 192, 192)', // Greenish-blue
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                tension: 0.2
+            },
+            {
+                label: 'Expenses',
+                data: dailyExpenses,
+                borderColor: 'rgb(255, 99, 132)', // Red
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                tension: 0.2
+            },
+        ],
     };
 
-    // If there are no expenses, don't show the chart
-    if (chartData.labels.length === 0) {
-        return <div className="card p-3 text-center">No expense data to display a chart.</div>;
-    }
+    const options = {
+        responsive: true, // Makes the chart resize with the screen
+        plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: `This Month's Financial Trend` },
+        },
+    };
 
     return (
-        <div className="card shadow-sm">
+        <div className="card shadow-sm h-100">
             <div className="card-body">
-                <h5 className="card-title text-center">Expense Breakdown</h5>
-                <Pie data={chartData} />
+                {/* Use the <Line /> component from the library */}
+                <Line options={options} data={data} />
             </div>
         </div>
     );

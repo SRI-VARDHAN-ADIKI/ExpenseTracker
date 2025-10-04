@@ -1,17 +1,15 @@
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif, system-ui;
+  /* The main content area will handle its own background color */
 }
 
-#root, .container-fluid, .row {
+/* This makes sure our app always takes up at least the full height of the screen */
+#root {
   min-height: 100vh;
 }
 
+/* A custom style for the active link in our dark sidebar */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #0d6efd;
-}
-
-.p-0 {
-  padding: 0 !important;
+  background-color: #0d6efd; /* Bootstrap's default blue */
 }

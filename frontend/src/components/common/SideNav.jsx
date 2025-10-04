@@ -36,11 +36,19 @@ const SideNav = () => {
             <hr />
             <div className="dropdown">
                 <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-person-circle fs-4 me-2"></i>
+                    {/* --- PROFILE PHOTO UPDATE --- */}
+                    <img src={isAuthenticated && user.profilePhotoUrl ? user.profilePhotoUrl : `https://placehold.co/32x32/f8f9fa/0d6efd?text=${isAuthenticated && user ? user.name.charAt(0) : 'G'}`} alt="" width="32" height="32" className="rounded-circle me-2" />
                     <strong>{isAuthenticated && user ? user.name : 'Guest'}</strong>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                    {isAuthenticated && (<li><button className="dropdown-item" onClick={handleLogout}>Sign out</button></li>)}
+                    {isAuthenticated && (
+                        <>
+                            {/* --- NEW LINK HERE --- */}
+                            <li><Link className="dropdown-item" to="/profile">My Profile</Link></li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li><button className="dropdown-item" onClick={handleLogout}>Sign out</button></li>
+                        </>
+                    )}
                 </ul>
             </div>
         </div>

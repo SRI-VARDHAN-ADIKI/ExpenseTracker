@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { useTransactions } from '../../context/TransactionContext.jsx';
-import ExpenseChart from './ExpenseChart.jsx';
+import ExpenseChart from './ExpenseChart.jsx'; // This import is now correct for our line chart
 
 const DashboardPage = () => {
+    // ... all your existing logic is correct ...
     const { transactions, isLoading } = useTransactions();
     const recentTransactions = transactions.slice(0, 5);
 
@@ -40,12 +41,13 @@ const DashboardPage = () => {
             </div>
 
             <div className="row">
-                <div className="col-lg-5 mb-4">
-                    <h3>Expense Chart</h3>
+                <div className="col-lg-7 mb-4">
+                    <h3 className="h4">Monthly Trend</h3>
+                    {/* This now renders our new line chart */}
                     <ExpenseChart transactions={transactions} />
                 </div>
-                <div className="col-lg-7">
-                    <h3>Recent Transactions</h3>
+                <div className="col-lg-5">
+                    <h3 className="h4">Recent Transactions</h3>
                     {isLoading ? <p>Loading...</p> : (
                         <div className="list-group">
                             {recentTransactions.map((t) => (

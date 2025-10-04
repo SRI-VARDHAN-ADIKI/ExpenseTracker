@@ -23,7 +23,7 @@ const ViewAllTransactionsPage = () => {
     const formatDate = (date) => new Date(date).toLocaleDateString();
 
     return (
-        <div className="container-fluid pt-4">
+        <>
             <h1 className="h2 pb-2 mb-3 border-bottom">All Transactions</h1>
             
             <div className="row mb-3">
@@ -43,13 +43,11 @@ const ViewAllTransactionsPage = () => {
                     {!isLoading && filteredTransactions.length === 0 && <p>No transactions found for this filter.</p>}
                     <div className="list-group">
                         {filteredTransactions.map((t) => (
-                            // --- ALIGNMENT FIX IS HERE ---
-                            <div key={t._id} className="list-group-item d-flex justify-content-between align-items-center"> {/* This class vertically centers everything */}
+                            <div key={t._id} className="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <h5 className="mb-1">{t.description}</h5>
                                     <small className="text-muted">{t.category} - {formatDate(t.createdAt)}</small>
                                 </div>
-                                {/* This inner flexbox group ensures the badge and button are aligned together */}
                                 <div className="d-flex align-items-center">
                                     <span className={`badge bg-${t.type === 'income' ? 'success' : 'danger'} rounded-pill fs-6 me-3`}>
                                         {t.type === 'income' ? '+' : '-'}${t.amount.toFixed(2)}
@@ -61,7 +59,7 @@ const ViewAllTransactionsPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

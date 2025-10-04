@@ -9,6 +9,7 @@ import DashboardPage from './components/Dashboard/DashboardPage';
 import ViewAllTransactionsPage from './components/Dashboard/ViewAllTransactionsPage';
 import AddIncomePage from './components/Dashboard/AddIncomePage';
 import AddExpensePage from './components/Dashboard/AddExpensePage';
+import ProfilePage from './components/Dashboard/ProfilePage'; // <-- Import the new page
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                     <Route path="transactions" element={<ViewAllTransactionsPage />} />
                     <Route path="add-income" element={<AddIncomePage />} />
                     <Route path="add-expense" element={<AddExpensePage />} />
+                    <Route path="profile" element={<ProfilePage />} /> {/* <-- Add the new route */}
                 </Route>
             </Route>
         </Routes>
