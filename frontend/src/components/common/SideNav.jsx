@@ -1,8 +1,16 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../Auth/AuthContext.jsx';
 
 const SideNav = () => {
-  const isAuthenticated = false; 
+  // Get the authentication state and functions from our context
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(); // Clear the user state
+    navigate('/login'); // Redirect to the login page
+  };
 
   return (
     <div className="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark">
@@ -12,15 +20,17 @@ const SideNav = () => {
       </Link>
       <hr />
       <ul className="nav nav-pills flex-column mb-auto">
-        {isAuthenticated && (
+        {/* === DYNAMIC LINKS START === */}
+        {isAuthenticated ? (
+          // If user IS logged in
           <li className="nav-item">
             <NavLink to="/" className="nav-link text-white" end>
               <i className="bi bi-grid me-2"></i>
               Dashboard
             </NavLink>
           </li>
-        )}
-        {!isAuthenticated && (
+        ) : (
+          // If user IS NOT logged in
           <>
             <li className="nav-item">
               <NavLink to="/login" className="nav-link text-white">
@@ -41,18 +51,22 @@ const SideNav = () => {
       <div className="dropdown">
         <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <i className="bi bi-person-circle fs-4 me-2"></i>
-          <strong>{isAuthenticated ? 'User Name' : 'Guest'}</strong>
+          <strong>
+            {isAuthenticated ? user.name : 'Guest'}
+          </strong>
         </a>
         <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li>
-            <a className="dropdown-item" href="#">
-              {isAuthenticated ? 'Sign out' : 'Not logged in'}
-            </a>
-          </li>
+          {isAuthenticated && (
+            <li>
+              <button className="dropdown-item" onClick={handleLogout}>
+                Sign out
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </div>
   );
 };
 
-export default SideNav;
+export default SideNav; 
