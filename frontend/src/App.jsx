@@ -3,24 +3,31 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import PrivateRoute from './components/Auth/PrivateRoute';
+
 import DashboardPage from './components/Dashboard/DashboardPage';
-import PrivateRoute from './components/Auth/PrivateRoute'; // <-- Import the new component
+import ViewAllTransactionsPage from './components/Dashboard/ViewAllTransactionsPage';
+import AddIncomePage from './components/Dashboard/AddIncomePage';
+import AddExpensePage from './components/Dashboard/AddExpensePage';
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
+    return (
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                {/* Public */}
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
 
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-
-
-        <Route element={<PrivateRoute />}>
-          <Route index element={<DashboardPage />} />
-        </Route>
-      </Route>
-    </Routes>
-  );
+                {/* Private */}
+                <Route element={<PrivateRoute />}>
+                    <Route index element={<DashboardPage />} />
+                    <Route path="transactions" element={<ViewAllTransactionsPage />} />
+                    <Route path="add-income" element={<AddIncomePage />} />
+                    <Route path="add-expense" element={<AddExpensePage />} />
+                </Route>
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;

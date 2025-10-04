@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// The fix is here as well
-import { useAuth } from './AuthContext'; 
+// CORRECT PATH: ../../ goes up two folders (from Auth -> components -> src) then into 'context'
+import { useAuth } from '../../context/AuthContext.jsx';
 import authApi from './authApi';
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
-  });
-
+  // (The rest of your working Register code is here)
+   const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' });
   const { name, email, password, password2 } = formData;
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +25,7 @@ const Register = () => {
         navigate('/');
       } catch (error) {
         console.error('Failed to register:', error);
-        alert('Registration failed. Please try again.');
+        alert('Registration failed. The email may already be in use.');
       }
     }
   };
@@ -44,8 +34,8 @@ const Register = () => {
     <div className="container pt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
+          <div className="card shadow-sm">
+            <div className="card-body p-4">
               <h1 className="card-title text-center mb-4">
                 <i className="bi bi-person-plus me-2"></i> Register
               </h1>
@@ -59,6 +49,7 @@ const Register = () => {
                     name="name"
                     value={name}
                     onChange={onChange}
+                    placeholder="Enter your name"
                     required
                   />
                 </div>
@@ -71,6 +62,7 @@ const Register = () => {
                     name="email"
                     value={email}
                     onChange={onChange}
+                    placeholder="you@example.com"
                     required
                   />
                 </div>
@@ -83,6 +75,7 @@ const Register = () => {
                     name="password"
                     value={password}
                     onChange={onChange}
+                    placeholder="Minimum 6 characters"
                     required
                     minLength="6"
                   />
@@ -96,11 +89,12 @@ const Register = () => {
                     name="password2"
                     value={password2}
                     onChange={onChange}
+                    placeholder="Confirm your password"
                     required
                     minLength="6"
                   />
                 </div>
-                <div className="d-grid">
+                <div className="d-grid mt-4">
                   <button type="submit" className="btn btn-primary">
                     Register
                   </button>

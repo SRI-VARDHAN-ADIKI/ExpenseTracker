@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// The fix is here: we now import from './AuthContext' without the .js extension
-import { useAuth } from './AuthContext'; 
+
+// CORRECT PATH: ../../ goes up two folders (from Auth -> components -> src) then into 'context'
+import { useAuth } from '../../context/AuthContext.jsx';
 import authApi from './authApi';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
+  // (The rest of your working Login code is here)
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const { email, password } = formData;
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -37,8 +30,8 @@ const Login = () => {
     <div className="container pt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
+          <div className="card shadow-sm">
+            <div className="card-body p-4">
               <h1 className="card-title text-center mb-4">
                 <i className="bi bi-box-arrow-in-right me-2"></i> Login
               </h1>
@@ -52,6 +45,7 @@ const Login = () => {
                     name="email"
                     value={email}
                     onChange={onChange}
+                    placeholder="you@example.com"
                     required
                   />
                 </div>
@@ -64,10 +58,11 @@ const Login = () => {
                     name="password"
                     value={password}
                     onChange={onChange}
+                    placeholder="Enter your password"
                     required
                   />
                 </div>
-                <div className="d-grid">
+                <div className="d-grid mt-4">
                   <button type="submit" className="btn btn-primary">
                     Login
                   </button>
