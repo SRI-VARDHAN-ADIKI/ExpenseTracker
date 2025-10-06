@@ -70,6 +70,9 @@ const ProfilePage = () => {
                                 </div>
                             </form>
                         </div>
+                        <div class = "normal">
+                            <p>this is my section</p>
+                        </div>
                     </div>
                 </div>
             </div>
