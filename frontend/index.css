@@ -4,6 +4,6 @@ body {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
+  color: #0d6efd;
   background-color: #0d6efd;
 }
