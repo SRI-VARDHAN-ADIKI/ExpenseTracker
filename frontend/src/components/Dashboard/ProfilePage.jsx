@@ -71,7 +71,7 @@ const ProfilePage = () => {
                             </form>
                         </div>
                         <div class = "normal">
-                            <p>this is my section</p>
+                            <p>this is my section .</p>
                         </div>
                     </div>
                 </div>
