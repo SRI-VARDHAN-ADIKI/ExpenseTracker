@@ -5,7 +5,7 @@ const { protect } = require('../middleware/authMiddleware.js');
 
 const Transaction = require('../models/Transaction.js');
 
-// GET all transactions
+// GET all transactions.
 router.get('/', protect, asyncHandler(async (req, res) => {
     const transactions = await Transaction.find({ user: req.user.id }).sort({ createdAt: -1 });
     res.json(transactions);
