@@ -40,7 +40,7 @@ npm install
 5. Run the backend server:
 ```bash
 cd backend
-npm start
+npm run dev
 ```
 
 6. Run the frontend (in a separate terminal):
